@@ -7,23 +7,89 @@ export function createElement(type,props,...children){
     return objeto
 }
 
-export function render(elementoVirtual, contenedor){
-    if (typeof elementoVirtual === "string" || typeof elementoVirtual === "number"  ){
-        const texto = document.createTextNode(elementoVirtual)
-        contenedor.appendChild(texto)
-        return
-    }
-    const nodo = document.createElement(elementoVirtual.type)
 
-    for (const clave in elementoVirtual.props){
-        nodo[clave]= elementoVirtual.props[clave]
-    }
-
-    for (const item of elementoVirtual.children){
-        render(item, nodo)
-    }
-
-    contenedor.appendChild(nodo)
-
+let arbolViejo = null
+export function render(nuevo, contenedor){ 
+    actualizar(contenedor, nuevo, arbolViejo, 0)
+    arbolViejo=nuevo
 }
 
+function cambio(nodoA, nodoB){
+
+    if(nodoA==null || nodoB== null){
+        if(nodoA == null && nodoB == null){  // == null da true cuando es null o undefined
+            return false
+        }else{
+            return true
+        }
+
+    }
+
+    if(typeof nodoA === "object" || typeof nodoB === "object"){
+        if(typeof nodoA !== typeof nodoB){
+            return true
+        }
+    }
+    
+    if((typeof nodoA === "string" || typeof nodoA === "number" )&& (typeof nodoB === "string" || typeof nodoB === "number")){
+        if(String(nodoA)!== String(nodoB)){
+            return true
+        }
+    }
+
+    if(typeof nodoA === "object" && typeof nodoB === "object"){
+        if(nodoA.type !== nodoB.type){
+            return true
+        }
+    }
+    return false
+}
+
+function crearNodo(elementoVirtual){
+    if(typeof elementoVirtual === "string" || typeof elementoVirtual === "number"){
+        const nodoTexto = document.createTextNode(elementoVirtual)
+        return nodoTexto
+    }
+    const nodo=document.createElement(elementoVirtual.type)
+    for(const atributo in elementoVirtual.props){
+        nodo[atributo]=elementoVirtual.props[atributo]
+    }
+    for(const hijo of elementoVirtual.children){
+        nodo.appendChild(crearNodo(hijo))
+    }
+    return nodo
+}
+
+export function actualizar(padre,nuevo,viejo, indice ){
+    const nodoReal=padre.childNodes[indice]
+
+    if(viejo == null){
+        padre.appendChild(crearNodo(nuevo))
+        return
+    }
+    if(nuevo == null){
+        padre.removeChild(nodoReal)
+        return
+    }
+    if(cambio(nuevo,viejo)){
+        padre.replaceChild(crearNodo(nuevo), nodoReal)
+        return 
+    }
+    
+    if (typeof nuevo === "string" || typeof nuevo === "number") {
+        return   // caso particular
+    }
+
+    for(const atributo in nuevo.props){
+        nodoReal[atributo]=nuevo.props[atributo]
+    }
+
+    for (let i = 0; i < nuevo.children.length; i++) {
+        actualizar(nodoReal, nuevo.children[i], viejo.children[i], i)
+    }
+
+    for (let i = viejo.children.length - 1; i >= nuevo.children.length; i--) {
+        nodoReal.removeChild(nodoReal.childNodes[i])
+    }
+    
+}

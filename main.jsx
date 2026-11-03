@@ -1,5 +1,5 @@
 
-import { createElement, render } from "./src/react.js"
+import { createElement, render, actualizar} from "./src/react.js"
 
 // // Prueba 1  -  funcion createElement 
 // console.log(createElement("h1", { className: "titulo" }, "Hola"))
@@ -28,6 +28,115 @@ import { createElement, render } from "./src/react.js"
 
 // render(arbol2, document.getElementById("root"))
 
-//Prueba 5  -  render actualiza un elemento?
-render(<h1>Primero</h1>, document.getElementById("root"))
-render(<h1>Segundo</h1>, document.getElementById("root"))
+// //Prueba 5  -  render actualiza un elemento?
+// render(<h1>Primero</h1>, document.getElementById("root"))
+// render(<h1>Segundo</h1>, document.getElementById("root"))
+
+
+// //Prueba 6  -  nueva funcion render 
+// render(<h1>Primero</h1>, document.getElementById("root"))
+// render(<h1>Segundo</h1>, document.getElementById("root"))
+
+// // Prueba 7  -  nueva funcion render, la recursion funciona?
+// const arbol2 = (
+//   <div>
+//     <h1 className="titulo">Hola</h1>
+//     <p>Tienes 3 tareas</p>
+//   </div>
+// )
+
+// render(arbol2, document.getElementById("root"))
+
+// console.log(cambio("3", 3))                          
+// console.log(cambio("Hola", "Chau"))                          
+// console.log(cambio("Hola", createElement("p", null)))        
+// console.log(cambio(createElement("h1", null), createElement("p", null)))   
+// console.log(cambio(createElement("p", null, "a"), createElement("p", null, "b"))) 
+
+
+// //Prueba 8   -  funcion actualizar 
+
+// const root = document.getElementById("root")
+
+
+// const viejo = <ul><li>A</li><li>B</li></ul>
+// const nuevo = <ul><li>A</li><li>C</li></ul>
+
+// render(viejo, root)
+// setTimeout(() =>
+//     actualizar(root, nuevo, viejo, 0), 2000
+// ) // para poder ver el cambio
+
+
+// //Prueba 9   -  funcion render nueva
+
+// const root = document.getElementById("root")
+
+
+// const viejo = <ul><li>A</li><li>B</li></ul>
+// const nuevo = <ul><li>A</li><li>C</li></ul>
+    
+// render(viejo, root)  
+// setTimeout(() =>
+//     render(nuevo, root), 2000
+// ) // para poder ver el cambio
+
+// // prueba 10   -  lista que crece 
+
+// const root = document.getElementById("root")
+
+
+// const viejo = <ul><li>A</li></ul>
+// const nuevo = <ul><li>A</li><li>B</li></ul>
+    
+// render(viejo, root)  
+// setTimeout(() =>
+//     render(nuevo, root), 2000
+// ) // para poder ver el cambio
+
+
+// // prueba 11   -  cambio de props
+
+// const root = document.getElementById("root")
+
+// const viejo = <h1 className="a">Hola</h1> 
+// const nuevo =  <h1 className="b">Hola</h1>
+    
+// render(viejo, root)  
+// setTimeout(() =>
+//     render(nuevo, root), 2000
+// ) // para poder ver el cambio
+
+
+// // prueba 12   - cambio de etiqueta
+
+// const root = document.getElementById("root")
+
+
+// const viejo = <h1>Hola</h1>
+// const nuevo =  <p>Hola</p>
+    
+// render(viejo, root)  
+// setTimeout(() =>
+//     render(nuevo, root), 2000
+// ) // para poder ver el cambio
+
+
+// prueba 13   - lista que se achica
+
+const root = document.getElementById("root")
+
+
+const viejo = <ul><li>A</li><li>B</li><li>C</li></ul>
+    
+const nuevo = <ul><li>A</li></ul>
+
+render(viejo, root)  
+setTimeout(() =>
+    render(nuevo, root), 2000
+) // para poder ver el cambio
+
+
+
+
+
