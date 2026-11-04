@@ -202,10 +202,22 @@ import { createElement, render, actualizar, createStore} from "./src/react.js"
 // render(<Caja><p>Hola</p></Caja>, root)
 
 
-// prueba 18 - componente , funciona con diff?
+// // prueba 18 - componente , funciona con diff?
+// function Saludo(props) {
+//   return <h1>Hola {props.nombre}</h1>
+// }
+
+// render(<Saludo nombre="Ana" />, root)
+// setTimeout(() => render(<Saludo nombre="Luis" />, root), 2000)
+
+// prueba 19 - un componente dentro de otro
+
 function Saludo(props) {
   return <h1>Hola {props.nombre}</h1>
 }
 
-render(<Saludo nombre="Ana" />, root)
-setTimeout(() => render(<Saludo nombre="Luis" />, root), 2000)
+function Pagina() {
+  return <div><Saludo nombre="Ana" /><Saludo nombre="Luis" /></div>
+}
+
+render(<Pagina />, root)

@@ -10,8 +10,9 @@ export function createElement(type,props,...children){
 
 let arbolViejo = null
 export function render(nuevo, contenedor){ 
-    actualizar(contenedor, nuevo, arbolViejo, 0)
-    arbolViejo=nuevo
+    const arbol=expandir(nuevo)
+    actualizar(contenedor, arbol, arbolViejo, 0)
+    arbolViejo=arbol
 }
 
 function cambio(nodoA, nodoB){
@@ -64,6 +65,20 @@ function crearNodo(elementoVirtual){
     return nodo
 }
 
+
+function expandir(elemento){
+    if(typeof elemento === "string" || typeof elemento === "number" || elemento == null){
+        return elemento
+    }
+    if(typeof elemento.type === "function"){
+        const resultado= elemento.type({...elemento.props, children : elemento.children})
+        return expandir(resultado)
+    }
+    const hijosExpandidos= elemento.children.map(hijo=> expandir(hijo))
+
+    return {...elemento, children: hijosExpandidos}
+
+}
 export function actualizar(padre,nuevo,viejo, indice ){
     const nodoReal=padre.childNodes[indice]
 
