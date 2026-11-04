@@ -93,3 +93,37 @@ export function actualizar(padre,nuevo,viejo, indice ){
     }
     
 }
+
+function reducer(estado, accion){
+    if(accion.type === "SUMAR"){
+        return {contador: estado.contador+1}
+    }
+    if (accion.type === "RESTAR"){
+        return {contador: estado.contador-1}
+    }
+
+    return estado
+}
+
+export function createStore(reducer, estadoInicial){
+    let estado = estadoInicial
+    const suscriptores= []
+
+    function getState(){
+        return estado
+    }
+
+    function dispatch(accion){
+        estado = reducer(estado,accion)
+        for(const subscriptor of suscriptores){
+            subscriptor()
+        }
+
+    }
+
+    function subscribe(funcion){
+        suscriptores.push(funcion)
+    }
+    return {getState, dispatch, subscribe}
+}
+

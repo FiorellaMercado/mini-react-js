@@ -1,5 +1,5 @@
 
-import { createElement, render, actualizar} from "./src/react.js"
+import { createElement, render, actualizar, createStore} from "./src/react.js"
 
 // // Prueba 1  -  funcion createElement 
 // console.log(createElement("h1", { className: "titulo" }, "Hola"))
@@ -122,21 +122,64 @@ import { createElement, render, actualizar} from "./src/react.js"
 // ) // para poder ver el cambio
 
 
-// prueba 13   - lista que se achica
+// // prueba 13   - lista que se achica
+
+// const root = document.getElementById("root")
+
+
+// const viejo = <ul><li>A</li><li>B</li><li>C</li></ul>
+    
+// const nuevo = <ul><li>A</li></ul>
+
+// render(viejo, root)  
+// setTimeout(() =>
+//     render(nuevo, root), 2000
+// ) // para poder ver el cambio
+
+
+// prueba 14   -  flux  por consola (store sin pantalla)
+// const store = createStore(reducer, { contador: 0 })
+
+// store.subscribe(() => console.log("cambió:", store.getState()))
+
+// store.dispatch({ type: "SUMAR" })
+// store.dispatch({ type: "SUMAR" })
+// store.dispatch({ type: "OTRA" })
+
+
+// Prueba 15 - contador con Flux: store + render con diff
 
 const root = document.getElementById("root")
 
+function reducer(estado, accion){
+    if(accion.type === "SUMAR"){
+        return {contador: estado.contador+1}
+    }
+    if (accion.type === "RESTAR"){
+        return {contador: estado.contador-1}
+    }
 
-const viejo = <ul><li>A</li><li>B</li><li>C</li></ul>
-    
-const nuevo = <ul><li>A</li></ul>
+    return estado
+}
 
-render(viejo, root)  
-setTimeout(() =>
-    render(nuevo, root), 2000
-) // para poder ver el cambio
+const store = createStore(reducer, { contador: 0 })
 
+function App(){
+    const estado = store.getState()
+    return(
+        <div>
+            <h1> {estado.contador}</h1>
+            <button onclick={()=> store.dispatch({type: "SUMAR"})}>+</button>
+            <button onclick={()=> store.dispatch({type: "RESTAR"})}>-</button>
 
+        </div>
+    )
+}
 
+function pintar(){
+    render(App(), root)
+}
 
+pintar()                 // dibuja la primera vez
+store.subscribe(pintar) 
 
