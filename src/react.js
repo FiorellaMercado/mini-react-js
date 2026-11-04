@@ -113,16 +113,6 @@ export function actualizar(padre,nuevo,viejo, indice ){
     
 }
 
-function reducer(estado, accion){
-    if(accion.type === "SUMAR"){
-        return {contador: estado.contador+1}
-    }
-    if (accion.type === "RESTAR"){
-        return {contador: estado.contador-1}
-    }
-
-    return estado
-}
 
 export function createStore(reducer, estadoInicial){
     let estado = estadoInicial
