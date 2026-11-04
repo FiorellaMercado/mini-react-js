@@ -36,3 +36,23 @@
 
 
 **Pendiente:** Falta el estado, Flux y la app de tareas.
+
+## día 3:
+**Hice:** Agregué Flux con una función *createStore* (guarda el estado y tiene *getState*, *dispatch* y *subscribe*) y la conecté con render para hacer un contador que se actualiza solo. También hice que se puedan usar componentes (funciones que devuelven JSX, como `<Saludo nombre="Ana" />`), con una función *expandir* que los convierte en etiquetas normales antes de comparar.
+
+
+**Problemas:**
+- Usé `store` y `root` antes de definirlos.
+- Escribí `onClick` como en React y no funcionó: como las props se asignan directo al DOM, hay que usar `onclick` en minúscula.
+- Los hijos de un componente llegaban como una lista dentro de otra lista y daba error en crearNodo.
+- Al cambiar las props de un componente, el diff no cambiaba nada en pantalla, porque el componente no tiene hijos hasta que se ejecuta.
+
+
+**Decisiones:**
+- El store es del framework, pero el reducer y las acciones son de cada app.
+- En `createElement` usé `children.flat()` para desarmar las listas de hijos.
+- Un componente recibe un solo objeto con sus props y `children`.
+- *expandir* se ejecuta en render antes del diff y se guarda el árbol ya expandido. Así actualizar compara etiquetas normales y no hizo falta cambiarlo.
+
+
+**Pendiente:** Hacer la app de tareas y probar el mini framework.
