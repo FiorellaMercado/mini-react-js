@@ -147,39 +147,65 @@ import { createElement, render, actualizar, createStore} from "./src/react.js"
 // store.dispatch({ type: "OTRA" })
 
 
-// Prueba 15 - contador con Flux: store + render con diff
+// // Prueba 15 - contador con Flux: store + render con diff
 
-const root = document.getElementById("root")
+// const root = document.getElementById("root")
 
-function reducer(estado, accion){
-    if(accion.type === "SUMAR"){
-        return {contador: estado.contador+1}
-    }
-    if (accion.type === "RESTAR"){
-        return {contador: estado.contador-1}
-    }
+// function reducer(estado, accion){
+//     if(accion.type === "SUMAR"){
+//         return {contador: estado.contador+1}
+//     }
+//     if (accion.type === "RESTAR"){
+//         return {contador: estado.contador-1}
+//     }
 
-    return estado
+//     return estado
+// }
+
+// const store = createStore(reducer, { contador: 0 })
+
+// function App(){
+//     const estado = store.getState()
+//     return(
+//         <div>
+//             <h1> {estado.contador}</h1>
+//             <button onclick={()=> store.dispatch({type: "SUMAR"})}>+</button>
+//             <button onclick={()=> store.dispatch({type: "RESTAR"})}>-</button>
+
+//         </div>
+//     )
+// }
+
+// function pintar(){
+//     render(App(), root)
+// }
+
+// pintar()                 // dibuja la primera vez
+// store.subscribe(pintar) 
+
+
+// // prueba 16 - componente solo con props
+
+// const root = document.getElementById("root")
+
+// function Saludo(props) {
+//   return <h1>Hola {props.nombre}</h1>
+// }
+
+// render(<Saludo nombre="Ana" />, root)
+
+// // prueba 17 - componente props y children
+// function Caja(props) {
+//   return <div className="caja">{props.children}</div>
+// }
+
+// render(<Caja><p>Hola</p></Caja>, root)
+
+
+// prueba 18 - componente , funciona con diff?
+function Saludo(props) {
+  return <h1>Hola {props.nombre}</h1>
 }
 
-const store = createStore(reducer, { contador: 0 })
-
-function App(){
-    const estado = store.getState()
-    return(
-        <div>
-            <h1> {estado.contador}</h1>
-            <button onclick={()=> store.dispatch({type: "SUMAR"})}>+</button>
-            <button onclick={()=> store.dispatch({type: "RESTAR"})}>-</button>
-
-        </div>
-    )
-}
-
-function pintar(){
-    render(App(), root)
-}
-
-pintar()                 // dibuja la primera vez
-store.subscribe(pintar) 
-
+render(<Saludo nombre="Ana" />, root)
+setTimeout(() => render(<Saludo nombre="Luis" />, root), 2000)

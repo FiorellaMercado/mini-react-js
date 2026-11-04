@@ -2,7 +2,7 @@ export function createElement(type,props,...children){
     const objeto={
         type:type,
         props: props || {},
-        children: children
+        children: children.flat()
     }
     return objeto
 }
@@ -49,6 +49,10 @@ function crearNodo(elementoVirtual){
     if(typeof elementoVirtual === "string" || typeof elementoVirtual === "number"){
         const nodoTexto = document.createTextNode(elementoVirtual)
         return nodoTexto
+    }
+    if(typeof elementoVirtual.type === "function"){
+        const resultado= elementoVirtual.type({...elementoVirtual.props, children : elementoVirtual.children})
+        return crearNodo(resultado)
     }
     const nodo=document.createElement(elementoVirtual.type)
     for(const atributo in elementoVirtual.props){
