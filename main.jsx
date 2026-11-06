@@ -212,6 +212,7 @@ import { createElement, render, actualizar, createStore} from "./src/react.js"
 
 // prueba 19 - un componente dentro de otro
 
+const root = document.getElementById("root")
 function Saludo(props) {
   return <h1>Hola {props.nombre}</h1>
 }
