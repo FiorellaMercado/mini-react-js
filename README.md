@@ -16,5 +16,5 @@ npm run dev
 ## Documentación
 
 - [Referencia técnica](docs/referencia.md)
-- [Guía](docs/guia.md) (Pendiente)
+- [Guía](docs/guia.md)
 - [Decisiones diarias](docs/diario.md)
