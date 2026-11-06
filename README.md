@@ -1,10 +1,6 @@
 # Mini React
 Mini React desde cero: JSX, virtual DOM y arquitectura Flux
 
-## Estado actual:
-- **En desarrollo:** JSX, createElement y render listos
-- **Pendiente:** diff, estado y Flux 
-
 ## Requisitos
 Node instalado
 
